@@ -12,7 +12,8 @@ class GreenButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: double.infinity,
+     width: double.infinity,
+     height: 50,
       child: Container(
         alignment: Alignment.center,
         decoration: const ShapeDecoration(

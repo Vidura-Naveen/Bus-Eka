@@ -1,7 +1,11 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:bus_eka/screens/admin/route/route_firebase_service.dart';
-import 'package:bus_eka/screens/admin/route/route_model.dart';
+import 'package:bus_eka_test/screens/admin/route/route_firebase_service.dart';
+import 'package:bus_eka_test/screens/admin/route/route_model.dart';
 import 'package:uuid/uuid.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 class AddEditRoutePage extends StatefulWidget {
   final Routez? route;
@@ -126,10 +130,30 @@ class _AddEditRoutePageState extends State<AddEditRoutePage> {
                     return null;
                   },
                 ),
-                SizedBox(height: 16.0),
+                ...fileRelatedWidgets(), //The ... is the spread operator in Dart. It's used to expand the elements of an iterable (like a list) into the elements of the surrounding list or collection.
+                // SizedBox(height: 16.0),
+                // selectedFile != null
+                //     ? Text(selectedFile!.path.split('/').last)
+                //     : Icon(Icons.insert_drive_file),
+                // SizedBox(height: 20),
+                // ElevatedButton.icon(
+                //   onPressed: pickFile,
+                //   icon: Icon(Icons.attach_file),
+                //   label: Text('Pick PDF'),
+                // ),
+                SizedBox(height: 20),
+                // ElevatedButton(
+                //   onPressed: submitFile,
+                //   child: Text('Submit PDF'),
+                // ),
+                // SizedBox(height: 16.0),
                 ElevatedButton(
                   onPressed: () {
                     _submitForm();
+                    // submitFile();
+                    if (widget.route != null) {
+                      submitFile();
+                    }
                   },
                   child: Text(widget.route == null ? 'Add' : 'Update'),
                 ),
@@ -139,6 +163,58 @@ class _AddEditRoutePageState extends State<AddEditRoutePage> {
         ),
       ),
     );
+  }
+
+  List<Widget> fileRelatedWidgets() {
+    if (widget.route != null) {
+      return [
+        SizedBox(height: 16.0),
+        selectedFile != null
+            ? Text(selectedFile!.path.split('/').last)
+            : Icon(Icons.insert_drive_file),
+        SizedBox(height: 20),
+        ElevatedButton.icon(
+          onPressed: pickFile,
+          icon: Icon(Icons.attach_file),
+          label: Text('Pick PDF'),
+        ),
+      ];
+    } else {
+      return [];
+    }
+  }
+
+  File? selectedFile;
+
+  Future<void> pickFile() async {
+    FilePickerResult? result = await FilePicker.platform
+        .pickFiles(type: FileType.custom, allowedExtensions: ['pdf']);
+
+    if (result != null) {
+      setState(() {
+        selectedFile = File(result.files.single.path!);
+      });
+    } else {
+      // User canceled the picker
+    }
+  }
+
+  Future<void> submitFile() async {
+    if (selectedFile != null) {
+      try {
+        String routeId = widget.route?.routeid ?? Uuid().v4();
+        await firebase_storage.FirebaseStorage.instance
+            .ref('MyPdf/$routeId.pdf')
+            // .ref('MyPdf/${widget.route!.routeid}/${selectedFile!.path.split('/').last}')
+            .putFile(selectedFile!);
+        // TODO: Add any additional processing or actions after file submission
+      } on firebase_storage.FirebaseException catch (e) {
+        // Handle error
+        print('Error uploading file: $e');
+      }
+    } else {
+      // No file selected
+    }
   }
 
   void _submitForm() {

@@ -1,13 +1,14 @@
+import 'package:bus_eka_test/screens/home.dart';
 import 'package:flutter/material.dart';
-import 'package:bus_eka/screens/bookticket/book_ticket.dart';
-import 'package:bus_eka/screens/menu_item/drawer.dart';
-import 'package:bus_eka/screens/passenger/sharelocation.dart';
-import 'package:bus_eka/screens/map_part/map_or_timetable.dart';
-import 'package:bus_eka/services/auth_logic.dart';
-import 'package:bus_eka/utils/colors.dart';
-import 'package:bus_eka/widgets/bluebutton.dart';
-import 'package:bus_eka/widgets/greenbutton.dart';
-import 'package:bus_eka/widgets/yellowbutton.dart';
+import 'package:bus_eka_test/screens/bookticket/book_ticket.dart';
+import 'package:bus_eka_test/screens/menu_item/drawer.dart';
+import 'package:bus_eka_test/screens/passenger/sharelocation.dart';
+import 'package:bus_eka_test/screens/map_part/map_or_timetable.dart';
+import 'package:bus_eka_test/services/auth_logic.dart';
+import 'package:bus_eka_test/utils/colors.dart';
+import 'package:bus_eka_test/widgets/bluebutton.dart';
+import 'package:bus_eka_test/widgets/greenbutton.dart';
+import 'package:bus_eka_test/widgets/yellowbutton.dart';
 import '../../models/user.dart' as user_model;
 
 class PassengerOption extends StatefulWidget {
@@ -67,17 +68,17 @@ class _PassengerOptionState extends State<PassengerOption> {
                   'Hay, ${currentUser?.userName ?? "Loading"}',
                   textAlign: TextAlign.center,
                   style: const TextStyle(
-                    color: Colors.yellow,
-                    fontSize: 20,
+                    color: mainYellowColor,
+                    fontSize: 22,
                   ),
                 ),
                 const SizedBox(height: 5),
                 const Text(
-                  'Where You want to GO',
+                  'What do you want to DO',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: Colors.yellow,
-                    fontSize: 20,
+                    color: mainWhiteColor,
+                    fontSize: 18,
                   ),
                 ),
                 const SizedBox(height: 10),
@@ -101,7 +102,7 @@ class _PassengerOptionState extends State<PassengerOption> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       GreenButton(
-                        text: 'Bus Info',
+                        text: 'Bus Information',
                         onPressed: () => _navigateTo(MapOrTimeTable()),
                       ),
                       const SizedBox(height: 30),
@@ -155,7 +156,14 @@ class _PassengerOptionState extends State<PassengerOption> {
       setState(() {
         currentUser = null;
       });
-      Navigator.pop(context);
+      // ignore: use_build_context_synchronously
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          // builder: (context) => AdminOption(),
+          builder: (context) => const Home(),
+        ),
+      ); // Close the current screen after sign-out
     } catch (err) {
       print(err.toString());
     }

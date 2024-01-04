@@ -1,33 +1,30 @@
 import 'package:flutter/material.dart';
-// import 'package:bus_eka/screens/passenger/sharelocationorbook.dart';
-// import 'package:bus_eka/screens/register_screen.dart';
-import 'package:bus_eka/screens/map_part/map_or_timetable.dart';
-import 'package:bus_eka/widgets/bluebutton.dart';
-import 'package:bus_eka/services/auth_logic.dart';
-import 'package:bus_eka/utils/colors.dart';
-import 'package:bus_eka/wrapper.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:bus_eka_test/screens/map_part/map_or_timetable.dart';
+import 'package:bus_eka_test/widgets/bluebutton.dart';
+import 'package:bus_eka_test/services/auth_logic.dart';
+import 'package:bus_eka_test/utils/colors.dart';
+import 'package:bus_eka_test/wrapper.dart';
 import '../../models/user.dart' as user_model;
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
 
   @override
-  // ignore: library_private_types_in_public_api
   _HomeState createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
   final AuthMethodes _authMethodes = AuthMethodes();
-
   user_model.User? currentUser;
 
   @override
   void initState() {
     super.initState();
     _loadCurrentUser();
+    _requestNotificationPermission();
   }
 
-  // Load the current user details
   void _loadCurrentUser() async {
     try {
       user_model.User? user = await _authMethodes.getCurrentUser();
@@ -36,8 +33,35 @@ class _HomeState extends State<Home> {
       });
     } catch (e) {
       print("Error loading current user: $e");
-      // Handle the error as needed
     }
+  }
+
+  void _requestNotificationPermission() async {
+    var status = await Permission.notification.request();
+
+    if (status.isGranted) {
+      // Permission is granted
+      print("Notification permission granted");
+    } else if (status.isDenied) {
+      // Permission is denied
+      print("Notification permission denied");
+      _showPermissionBanner();
+    }
+  }
+
+  void _showPermissionBanner() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text("Please allow notifications to receive updates."),
+        action: SnackBarAction(
+          label: "Allow",
+          onPressed: () {
+            // Open app settings to allow notifications
+            openAppSettings();
+          },
+        ),
+      ),
+    );
   }
 
   @override
@@ -53,22 +77,16 @@ class _HomeState extends State<Home> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  // For the top space
                   Container(
                     height: MediaQuery.of(context).size.height * 0.1,
                   ),
-
-                  // Image for logo
                   Image.asset(
                     'assets/buseka.png',
                     height: 220,
                   ),
-
                   const SizedBox(
                     height: 30,
                   ),
-
-                  // Text field for email
                   BlueBtn(
                     text: 'Bus Information',
                     onPressed: () {
@@ -80,11 +98,9 @@ class _HomeState extends State<Home> {
                       );
                     },
                   ),
-
                   const SizedBox(
                     height: 50,
                   ),
-
                   const Text(
                     "For Booking & Share Location",
                     style: TextStyle(
@@ -94,11 +110,9 @@ class _HomeState extends State<Home> {
                       fontFamily: 'outfit',
                     ),
                   ),
-
                   const SizedBox(
                     height: 2,
                   ),
-
                   BlueBtn(
                     text: 'My Account',
                     onPressed: () {
@@ -113,7 +127,6 @@ class _HomeState extends State<Home> {
                   Container(
                     height: MediaQuery.of(context).size.height * 0.05,
                   ),
-                  // Remove padding around images using Container
                   Center(
                     child: Container(
                       padding: EdgeInsets.zero,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:bus_eka/screens/admin/passenger/passenger_add_edit.dart';
-import 'package:bus_eka/screens/admin/passenger/passenger_firebase_service.dart';
-import 'package:bus_eka/screens/admin/passenger/passenger_model.dart';
+import 'package:bus_eka_test/screens/admin/passenger/passenger_add_edit.dart';
+import 'package:bus_eka_test/screens/admin/passenger/passenger_firebase_service.dart';
+import 'package:bus_eka_test/screens/admin/passenger/passenger_model.dart';
 
 class PassengerCrud extends StatefulWidget {
   @override
@@ -37,8 +37,8 @@ class _PassengerCrudState extends State<PassengerCrud> {
                 subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Seat Count: ${user.userName}'),
-                    Text('Route: ${user.email}'),
+                    Text('Email: ${user.email}'),
+                    Text('Phone Number: ${user.phoneno}'),
                   ],
                 ),
                 trailing: Row(

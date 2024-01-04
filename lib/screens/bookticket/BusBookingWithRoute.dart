@@ -1,24 +1,26 @@
+import 'package:bus_eka_test/screens/bookticket/seat/booking_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:bus_eka/screens/bookticket/book_bus_model.dart';
-import 'package:bus_eka/screens/menu_item/drawer.dart';
-import 'package:bus_eka/services/auth_logic.dart';
-import 'package:bus_eka/utils/colors.dart';
+import 'package:bus_eka_test/screens/bookticket/book_bus_model.dart';
+import 'package:bus_eka_test/screens/menu_item/drawer.dart';
+import 'package:bus_eka_test/services/auth_logic.dart';
+import 'package:bus_eka_test/utils/colors.dart';
 import '../../models/user.dart' as user_model;
-import 'package:bus_eka/screens/bookticket/seat.dart';
 
 class BusBookingWithRoute extends StatefulWidget {
   final String routeId;
   final String routeName;
   final double ticketPrice;
+  final DateTime selectedDate;
   // final String routeName;
 
-  const BusBookingWithRoute({
-    Key? key,
-    required this.routeId,
-    required this.routeName,
-    required this.ticketPrice,
-  }) : super(key: key);
+  const BusBookingWithRoute(
+      {Key? key,
+      required this.routeId,
+      required this.routeName,
+      required this.ticketPrice,
+      required this.selectedDate})
+      : super(key: key);
 
   @override
   _BusBookingWithRouteState createState() => _BusBookingWithRouteState();
@@ -117,6 +119,14 @@ class _BusBookingWithRouteState extends State<BusBookingWithRoute> {
                   fontSize: 16,
                 ),
               ),
+              Text(
+                // ignore: unnecessary_null_comparison
+                'Selected Date: ${widget.selectedDate != null ? widget.selectedDate.toLocal().toString().split(' ')[0] : 'Select Date'}',
+                style: const TextStyle(
+                  color: mainWhiteColor,
+                  fontSize: 16,
+                ),
+              ),
               Container(
                 height: MediaQuery.of(context).size.height * 0.01,
               ),
@@ -155,7 +165,6 @@ class _BusBookingWithRouteState extends State<BusBookingWithRoute> {
                                   Expanded(
                                     child: ListTile(
                                       title: Text(
-                                        'Bus Name: ${buses[index].busname}'
                                         'Bus Name: ${buses[index].busname}',
                                         style: TextStyle(color: mainBlueColor),
                                       ),
@@ -178,6 +187,11 @@ class _BusBookingWithRouteState extends State<BusBookingWithRoute> {
                                             style:
                                                 TextStyle(color: mainBlueColor),
                                           ),
+                                          Text(
+                                            'Seat Count : ${buses[index].seatcount}',
+                                            style:
+                                                TextStyle(color: mainBlueColor),
+                                          ),
                                         ],
                                       ),
                                     ),
@@ -196,8 +210,17 @@ class _BusBookingWithRouteState extends State<BusBookingWithRoute> {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) =>
-                                              ConfirmationPage(),
+                                          builder: (context) => BookingPage(
+                                            userName: currentUser?.userName ??
+                                                "Loading",
+                                            busName: buses[index].busname,
+                                            ticketPrice: widget.ticketPrice,
+                                            seatCount: buses[index].seatcount,
+                                            busId: buses[index].busid,
+                                            routeId: widget.routeId,
+                                            routeName: widget.routeName,
+                                            selectedDate: widget.selectedDate,
+                                          ),
                                         ),
                                       );
                                     },

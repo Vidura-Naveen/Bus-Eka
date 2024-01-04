@@ -13,11 +13,12 @@ class BlueBtn extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
+      height: 50,
       child: Container(
         alignment: Alignment.center,
         decoration: const ShapeDecoration(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(50)),
+            borderRadius: BorderRadius.all(Radius.circular(20)),
           ),
           color: mainBlueColor,
         ),

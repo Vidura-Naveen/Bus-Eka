@@ -1,9 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:bus_eka_test/screens/home.dart';
 import 'package:flutter/material.dart';
-import 'package:bus_eka/screens/bookticket/BusBookingWithRoute.dart';
-import 'package:bus_eka/screens/menu_item/drawer.dart';
-import 'package:bus_eka/services/auth_logic.dart';
-import 'package:bus_eka/utils/colors.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:bus_eka_test/screens/bookticket/BusBookingWithRoute.dart';
+import 'package:bus_eka_test/screens/menu_item/drawer.dart';
+import 'package:bus_eka_test/services/auth_logic.dart';
+import 'package:bus_eka_test/utils/colors.dart';
 import '../../models/user.dart' as user_model;
 
 class RouteData {
@@ -22,15 +23,16 @@ class BookTicket extends StatefulWidget {
   const BookTicket({Key? key}) : super(key: key);
 
   @override
-  // ignore: library_private_types_in_public_api
   _BookTicketState createState() => _BookTicketState();
 }
 
 class _BookTicketState extends State<BookTicket> {
   final AuthMethodes _authMethodes = AuthMethodes();
-  user_model.User? currentUser; // Use nullable type
+  user_model.User? currentUser;
   List<RouteData> routeNames = [];
   RouteData? selectedRoute;
+  DateTime? selectedDate;
+
   @override
   void initState() {
     super.initState();
@@ -53,7 +55,6 @@ class _BookTicketState extends State<BookTicket> {
     });
   }
 
-  // Load the current user details
   void _loadCurrentUser() async {
     try {
       user_model.User? user = await _authMethodes.getCurrentUser();
@@ -75,14 +76,14 @@ class _BookTicketState extends State<BookTicket> {
         iconTheme: const IconThemeData(color: Colors.white),
       ),
       drawer: AppDrawer(
-        onSignOut: _signOut, // Pass the sign-out callback
-        userName: currentUser?.userName, // Pass the current user's name
+        onSignOut: _signOut,
+        userName: currentUser?.userName,
       ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
             height: MediaQuery.of(context).size.height,
-            padding: const EdgeInsets.symmetric(horizontal: 32),
+            padding: const EdgeInsets.symmetric(horizontal: 25),
             width: double.infinity,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -91,26 +92,25 @@ class _BookTicketState extends State<BookTicket> {
                   height: MediaQuery.of(context).size.height * 0.02,
                 ),
                 Text(
-                  'Hay, ${currentUser?.userName ?? "Loading"}',
+                  'Hey, ${currentUser?.userName ?? "Loading"}',
                   textAlign: TextAlign.center,
                   style: const TextStyle(
                     color: Colors.yellow,
-                    fontSize: 20, // Set the font size to 20
-                    fontFamily:
-                        'Montserrat', // Replace 'RobotoMono' with the actual font family name
+                    fontSize: 22,
+                    fontFamily: 'Montserrat',
                   ),
                 ),
-
                 const SizedBox(height: 5),
                 const Text(
                   'Book Your Ticket',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: Colors.yellow,
-                    fontSize: 20,
+                    color: mainWhiteColor,
+                    fontSize: 18,
                     fontFamily: 'Montserrat',
                   ),
                 ),
+                const SizedBox(height: 15),
                 GestureDetector(
                   onTap: () {},
                   child: Image.asset(
@@ -118,10 +118,10 @@ class _BookTicketState extends State<BookTicket> {
                     height: 80,
                   ),
                 ),
-                // Container with buttons
+                const SizedBox(height: 32),
                 Container(
-                  margin: const EdgeInsets.all(20),
-                  padding: const EdgeInsets.all(20),
+                  margin: const EdgeInsets.all(5),
+                  padding: const EdgeInsets.all(15),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(20),
@@ -130,7 +130,7 @@ class _BookTicketState extends State<BookTicket> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       const Text(
-                        'Selecet Route You want',
+                        'Select Route You Want',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: mainBlueColor,
@@ -139,7 +139,7 @@ class _BookTicketState extends State<BookTicket> {
                         ),
                       ),
                       const SizedBox(height: 50),
-                      DropdownButton<RouteData>(
+                      DropdownButtonFormField<RouteData>(
                         value: selectedRoute,
                         items: routeNames.map((RouteData route) {
                           return DropdownMenuItem<RouteData>(
@@ -151,26 +151,88 @@ class _BookTicketState extends State<BookTicket> {
                           setState(() {
                             selectedRoute = value;
                           });
-                          // loadRouteData();
                         },
-                        hint: Text('Select Route'),
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          filled: true,
+                          fillColor: Colors.white,
+                          hintText: 'Select Route',
+                          contentPadding:
+                              EdgeInsets.symmetric(horizontal: 10.0),
+                        ),
                       ),
-                      const SizedBox(height: 30),
+                      const SizedBox(height: 10),
                       ElevatedButton(
-                        child: Text('Book Bus'),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: mainGreenColor,
+                          fixedSize: const Size(300, 50),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                        ),
+                        onPressed: () async {
+                          // Show date picker
+                          DateTime? pickedDate = await showDatePicker(
+                            context: context,
+                            initialDate: DateTime.now(),
+                            firstDate: DateTime.now(),
+                            lastDate: DateTime.now().add(Duration(days: 3)),
+                          );
+
+                          if (pickedDate != null &&
+                              pickedDate != selectedDate) {
+                            setState(() {
+                              selectedDate = pickedDate;
+                            });
+                          }
+                        },
+                        child: Container(
+                          padding: EdgeInsets.symmetric(vertical: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Icon(
+                                Icons.calendar_today,
+                                color: mainWhiteColor,
+                              ),
+                              Text(
+                                'Selected Date: ${selectedDate != null ? selectedDate!.toLocal().toString().split(' ')[0] : 'Pick Date Here'}',
+                                style: TextStyle(color: mainWhiteColor),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 60),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: mainBlueColor,
+                          fixedSize: const Size(300, 50),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                        ),
+                        child: const Text(
+                          'Book Bus',
+                          style: TextStyle(color: mainWhiteColor),
+                        ),
                         onPressed: () async {
                           try {
-                            if (selectedRoute == null) {
-                              throw Exception('Please select a route');
+                            if (selectedRoute == null || selectedDate == null) {
+                              throw Exception('Please select a route and date');
                             }
 
                             Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => BusBookingWithRoute(
-                                    routeId: selectedRoute!.routeId,
-                                    routeName: selectedRoute!.routeName,
-                                    ticketPrice: selectedRoute!.ticketPrice),
+                                  routeId: selectedRoute!.routeId,
+                                  routeName: selectedRoute!.routeName,
+                                  ticketPrice: selectedRoute!.ticketPrice,
+                                  selectedDate: selectedDate!,
+                                ),
                               ),
                             );
                           } catch (e) {
@@ -194,12 +256,16 @@ class _BookTicketState extends State<BookTicket> {
     try {
       await _authMethodes.signOut();
 
-      // Update the currentUser state after signing out
       setState(() {
         currentUser = null;
       });
 
-      Navigator.pop(context); // Close the current screen after sign-out
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const Home(),
+        ),
+      );
     } catch (err) {
       print(err.toString());
     }

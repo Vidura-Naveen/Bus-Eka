@@ -1,13 +1,14 @@
+import 'package:bus_eka_test/screens/home.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:bus_eka/screens/drawer.dart';
-import 'package:bus_eka/screens/map_part/map_page.dart';
-import 'package:bus_eka/screens/map_part/timetable.dart';
-import 'package:bus_eka/services/auth_logic.dart';
-import 'package:bus_eka/utils/colors.dart';
+// import 'package:bus_eka_test/screens/drawer.dart';
+import 'package:bus_eka_test/screens/map_part/map_page.dart';
+import 'package:bus_eka_test/screens/map_part/timetable.dart';
+import 'package:bus_eka_test/services/auth_logic.dart';
+import 'package:bus_eka_test/utils/colors.dart';
 
 import '../../models/user.dart' as user_model;
 
@@ -151,7 +152,7 @@ class _MapOrTimeTableState extends State<MapOrTimeTable> {
       appBar: AppBar(
         backgroundColor: mainBlueColor,
         elevation: 0.0,
-        // iconTheme: const IconThemeData(color: Colors.white),
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
       // drawer: AppDrawer(
       //   onSignOut: _signOut,
@@ -161,7 +162,7 @@ class _MapOrTimeTableState extends State<MapOrTimeTable> {
         child: SingleChildScrollView(
           child: Container(
             height: MediaQuery.of(context).size.height,
-            padding: const EdgeInsets.symmetric(horizontal: 32),
+            padding: const EdgeInsets.symmetric(horizontal: 25),
             width: double.infinity,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -173,24 +174,25 @@ class _MapOrTimeTableState extends State<MapOrTimeTable> {
                   'Hay, ${currentUser?.userName ?? "User"}',
                   textAlign: TextAlign.center,
                   style: const TextStyle(
-                    color: Colors.yellow,
-                    fontSize: 20,
+                    color: mainYellowColor,
+                    fontSize: 22,
                     fontFamily: 'Montserrat',
                   ),
                 ),
                 const SizedBox(height: 5),
                 const Text(
-                  'Where You want to GO',
+                  'Where Do You want to GO',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: Colors.yellow,
-                    fontSize: 20,
+                    color: mainWhiteColor,
+                    fontSize: 18,
                     fontFamily: 'Montserrat',
                   ),
                 ),
+                const SizedBox(height: 20),
                 Container(
-                  margin: const EdgeInsets.all(20),
-                  padding: const EdgeInsets.all(20),
+                  margin: const EdgeInsets.all(5),
+                  padding: const EdgeInsets.all(15),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(20),
@@ -198,6 +200,16 @@ class _MapOrTimeTableState extends State<MapOrTimeTable> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
+                      const Text(
+                        'Selecet Your Destination & Route',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: mainBlueColor,
+                          fontSize: 20,
+                          fontFamily: 'RobotoMono',
+                        ),
+                      ),
+                      const SizedBox(height: 20),
                       TextField(
                         controller: _fromController,
                         decoration: const InputDecoration(labelText: 'From'),
@@ -208,7 +220,8 @@ class _MapOrTimeTableState extends State<MapOrTimeTable> {
                         decoration: const InputDecoration(labelText: 'To'),
                       ),
                       const SizedBox(height: 20),
-                      DropdownButton<RouteData>(
+
+                      DropdownButtonFormField<RouteData>(
                         value: selectedRoute,
                         items: routeNames.map((RouteData route) {
                           return DropdownMenuItem<RouteData>(
@@ -222,12 +235,34 @@ class _MapOrTimeTableState extends State<MapOrTimeTable> {
                           });
                           loadRouteData();
                         },
-                        hint: const Text('Select Route'),
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          filled: true,
+                          fillColor: Colors.white,
+                          hintText: 'Select Route',
+                          contentPadding:
+                              EdgeInsets.symmetric(horizontal: 10.0),
+                        ),
                       ),
-                      const SizedBox(height: 10),
+
+                      const SizedBox(height: 30),
                       //ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
                       ElevatedButton(
-                        child: Text('Show Map'),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: mainBlueColor,
+                          fixedSize:
+                              const Size(300, 50), // Set the width and height
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                                20), // Set the border radius
+                          ),
+                        ),
+                        child: const Text(
+                          'Show Map',
+                          style: TextStyle(color: mainWhiteColor),
+                        ),
                         onPressed: () async {
                           if (_fromController.text.isEmpty ||
                               _toController.text.isEmpty ||
@@ -283,10 +318,31 @@ class _MapOrTimeTableState extends State<MapOrTimeTable> {
                           }
                         },
                       ),
-                      const SizedBox(height: 10),
+                      const SizedBox(height: 20),
                       //oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+                      const Text(
+                        'Selecet Route for Show Time Table',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: mainBlackColor,
+                          fontSize: 16,
+                          fontFamily: 'RobotoMono',
+                        ),
+                      ),
                       ElevatedButton(
-                        child: const Text('Show Timetable'),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: mainYellowColor,
+                          fixedSize:
+                              const Size(300, 50), // Set the width and height
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                                20), // Set the border radius
+                          ),
+                        ),
+                        child: const Text(
+                          'Show Timetable',
+                          style: TextStyle(color: mainBlueColor),
+                        ),
                         onPressed: () async {
                           if (selectedRoute == null) {
                             // Show Snackbar for error message
@@ -300,22 +356,22 @@ class _MapOrTimeTableState extends State<MapOrTimeTable> {
                           }
 
                           try {
-                            List<Location> fromLocations =
-                                await locationFromAddress(_fromController.text);
-                            List<Location> toLocations =
-                                await locationFromAddress(_toController.text);
+                            // List<Location> fromLocations =
+                            //     await locationFromAddress(_fromController.text);
+                            // List<Location> toLocations =
+                            //     await locationFromAddress(_toController.text);
 
-                            LatLng fromLatLng = LatLng(
-                                fromLocations[0].latitude,
-                                fromLocations[0].longitude);
-                            LatLng toLatLng = LatLng(toLocations[0].latitude,
-                                toLocations[0].longitude);
+                            // LatLng fromLatLng = LatLng(
+                            //     fromLocations[0].latitude,
+                            //     fromLocations[0].longitude);
+                            // LatLng toLatLng = LatLng(toLocations[0].latitude,
+                            //     toLocations[0].longitude);
 
-                            Position currentPosition =
-                                await Geolocator.getCurrentPosition();
-                            LatLng currentLatLng = LatLng(
-                                currentPosition.latitude,
-                                currentPosition.longitude);
+                            // Position currentPosition =
+                            //     await Geolocator.getCurrentPosition();
+                            // LatLng currentLatLng = LatLng(
+                            //     currentPosition.latitude,
+                            //     currentPosition.longitude);
 
                             // Navigate to the timetable page
                             // ignore: use_build_context_synchronously
@@ -323,11 +379,11 @@ class _MapOrTimeTableState extends State<MapOrTimeTable> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => TimeTablePage(
-                                  fromLatLng: fromLatLng,
-                                  toLatLng: toLatLng,
-                                  routelocation1: routelocation1,
-                                  routelocation2: routelocation2,
-                                  currentLatLng: currentLatLng,
+                                  // fromLatLng: fromLatLng,
+                                  // toLatLng: toLatLng,
+                                  // routelocation1: routelocation1,
+                                  // routelocation2: routelocation2,
+                                  // currentLatLng: currentLatLng,
                                   routeId: selectedRoute!.routeId,
                                 ),
                               ),
@@ -338,6 +394,7 @@ class _MapOrTimeTableState extends State<MapOrTimeTable> {
                           }
                         },
                       ),
+                      const SizedBox(height: 20),
                       //ooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
                     ],
                   ),
@@ -357,7 +414,14 @@ class _MapOrTimeTableState extends State<MapOrTimeTable> {
         currentUser = null;
       });
       // ignore: use_build_context_synchronously
-      Navigator.pop(context);
+      // ignore: use_build_context_synchronously
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          // builder: (context) => AdminOption(),
+          builder: (context) => const Home(),
+        ),
+      ); // Close the current screen after sign-out
     } catch (err) {
       print(err.toString());
     }

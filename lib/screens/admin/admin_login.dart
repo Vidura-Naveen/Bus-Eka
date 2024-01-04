@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:bus_eka/screens/admin/admin_option.dart';
-import 'package:bus_eka/screens/home.dart';
-import 'package:bus_eka/utils/colors.dart';
+import 'package:bus_eka_test/screens/admin/admin_option.dart';
+import 'package:bus_eka_test/screens/home.dart';
+import 'package:bus_eka_test/utils/colors.dart';
 
 class AdminLoginPage extends StatefulWidget {
   @override
@@ -87,14 +87,19 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
                   decoration: InputDecoration(labelText: 'Password'),
                   obscureText: true,
                 ),
-                SizedBox(height: 16.0),
+                SizedBox(height: 35.0),
                 ElevatedButton(
                   onPressed: _login,
-                  child: Text('Login', style: TextStyle(color: Colors.white)),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: mainBlueColor,
-                    elevation: 4, // background color
+                    fixedSize: const Size(300, 50), // Set the width and height
+                    shape: RoundedRectangleBorder(
+                      borderRadius:
+                          BorderRadius.circular(20), // Set the border radius
+                    ),
                   ),
+                  child: const Text('Login',
+                      style: TextStyle(color: Colors.white)),
                 ),
 
                 SizedBox(height: 16.0),

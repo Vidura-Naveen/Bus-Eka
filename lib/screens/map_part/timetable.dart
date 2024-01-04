@@ -1,22 +1,41 @@
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+// import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:flutter_pdfview/flutter_pdfview.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:http/http.dart' as http;
+import 'dart:io';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 class TimeTablePage extends StatelessWidget {
-  final LatLng fromLatLng;
-  final LatLng toLatLng;
-  final LatLng routelocation1;
-  final LatLng routelocation2;
-  final LatLng currentLatLng;
-  final String routeId; // Add routeId parameter
+  final String routeId;
 
   TimeTablePage({
-    required this.fromLatLng,
-    required this.toLatLng,
-    required this.routelocation1,
-    required this.routelocation2,
-    required this.currentLatLng,
     required this.routeId,
   });
+
+  Future<File> getFileFromUrl() async {
+    try {
+      // Get the download URL from Firebase Storage
+      String url = await firebase_storage.FirebaseStorage.instance
+          .ref('MyPdf/$routeId.pdf')
+          .getDownloadURL();
+
+      print('PDF URL: $url');
+
+      final response = await http.get(Uri.parse(url));
+      final filename = '$routeId.pdf';
+      var bytes = response.bodyBytes;
+      String dir = (await getApplicationDocumentsDirectory()).path;
+      File file = new File('$dir/$filename');
+      await file.writeAsBytes(bytes);
+
+      print('PDF File Path: ${file.path}');
+      return file;
+    } catch (e) {
+      print('Error downloading file: $e');
+      throw e;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,17 +45,22 @@ class TimeTablePage extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('From LatLng: $fromLatLng'),
-            Text('To LatLng: $toLatLng'),
-            Text('Location 1: $routelocation1'),
-            Text('Location 2: $routelocation2'),
-            Text('Current LatLng: $currentLatLng'),
-            Text('Route ID: $routeId'), // Display routeId
-            // Add more timetable details or components as needed
-          ],
+        child: FutureBuilder<File>(
+          future: getFileFromUrl(),
+          builder: (BuildContext context, AsyncSnapshot<File> snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              if (snapshot.error != null) {
+                print('Error: ${snapshot.error}');
+                return Text('Error: ${snapshot.error}');
+              } else {
+                return PDFView(
+                  filePath: snapshot.data!.path,
+                );
+              }
+            } else {
+              return Center(child: CircularProgressIndicator());
+            }
+          },
         ),
       ),
     );

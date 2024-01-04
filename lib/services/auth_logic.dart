@@ -9,6 +9,18 @@ class AuthMethodes {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+// Update loyaltycount for the user
+  Future<void> updateLoyaltyCount(String uid, int newLoyaltyCount) async {
+    try {
+      await _firestore.collection('users').doc(uid).update({
+        'loyaltycount': newLoyaltyCount,
+      });
+    } catch (e) {
+      print('Error updating loyaltycount: $e');
+      throw e; // You may want to handle this error in the calling code
+    }
+  }
+
   // //get the current user details
   Future<user_model.User?> getCurrentUser() async {
     try {

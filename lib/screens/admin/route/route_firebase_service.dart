@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:bus_eka/screens/admin/route/route_model.dart';
+import 'package:bus_eka_test/screens/admin/route/route_model.dart';
 
 class RouteFirebaseService {
   final FirebaseFirestore _rfirestore = FirebaseFirestore.instance;

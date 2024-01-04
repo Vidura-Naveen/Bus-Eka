@@ -1,13 +1,16 @@
+import 'package:bus_eka_test/screens/home.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:bus_eka/screens/menu_item/drawer.dart';
-// import 'package:bus_eka/screens/passenger/route_model_for_locationshare.dart';
-import 'package:bus_eka/services/auth_logic.dart';
-import 'package:bus_eka/utils/colors.dart';
-// import 'package:bus_eka/widgets/text_feild.dart';
+import 'package:bus_eka_test/screens/menu_item/drawer.dart';
+// import 'package:bus_eka_test/screens/passenger/route_model_for_locationshare.dart';
+import 'package:bus_eka_test/services/auth_logic.dart';
+import 'package:bus_eka_test/utils/colors.dart';
+// import 'package:bus_eka_test/widgets/text_feild.dart';
 import '../../models/user.dart' as user_model;
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class RouteData {
   final String routeId;
@@ -41,6 +44,13 @@ class ShareLocation extends StatefulWidget {
 }
 
 class _ShareLocationState extends State<ShareLocation> {
+  //Notification
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
+  // Store the notification ID
+  int? _notificationId;
+  late final SharedPreferences _preferences;
+  //Notification
   final databaseReference = FirebaseDatabase.instance.ref();
   bool isSharingLocation = false;
   bool shouldUpdateLocation = true;
@@ -99,6 +109,8 @@ class _ShareLocationState extends State<ShareLocation> {
     super.initState();
     _loadCurrentUser();
     loadRouteNames();
+    _initializeNotifications();
+    _initSharedPreferences();
   }
 
   @override
@@ -107,6 +119,23 @@ class _ShareLocationState extends State<ShareLocation> {
     shouldUpdateLocation =
         false; // Ensure the loop stops when the widget is disposed.
     super.dispose();
+  }
+
+  //oooooooooooooooooooooooooooooooooooooo
+  Future<void> _initSharedPreferences() async {
+    _preferences = await SharedPreferences.getInstance();
+  }
+
+  void _initializeNotifications() async {
+    const AndroidInitializationSettings initializationSettingsAndroid =
+        AndroidInitializationSettings('@mipmap/ic_launcher');
+
+    final InitializationSettings initializationSettings =
+        InitializationSettings(
+      android: initializationSettingsAndroid,
+    );
+
+    await flutterLocalNotificationsPlugin.initialize(initializationSettings);
   }
 
   void _loadCurrentUser() async {
@@ -120,6 +149,7 @@ class _ShareLocationState extends State<ShareLocation> {
     }
   }
 
+//oooooooooooooooooooooooooooooooooooooo
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -137,7 +167,7 @@ class _ShareLocationState extends State<ShareLocation> {
         child: SingleChildScrollView(
           child: Container(
             height: MediaQuery.of(context).size.height,
-            padding: const EdgeInsets.symmetric(horizontal: 32),
+            padding: const EdgeInsets.symmetric(horizontal: 25),
             width: double.infinity,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -150,7 +180,7 @@ class _ShareLocationState extends State<ShareLocation> {
                   textAlign: TextAlign.center,
                   style: const TextStyle(
                     color: Colors.yellow,
-                    fontSize: 20,
+                    fontSize: 22,
                   ),
                 ),
                 const SizedBox(height: 5),
@@ -158,13 +188,14 @@ class _ShareLocationState extends State<ShareLocation> {
                   'Share Your Location',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: Colors.yellow,
-                    fontSize: 20,
+                    color: mainWhiteColor,
+                    fontSize: 18,
                   ),
                 ),
+                const SizedBox(height: 30),
                 Container(
-                  margin: const EdgeInsets.all(20),
-                  padding: const EdgeInsets.all(20),
+                  margin: const EdgeInsets.all(5),
+                  padding: const EdgeInsets.all(15),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(20),
@@ -175,7 +206,7 @@ class _ShareLocationState extends State<ShareLocation> {
                       const SizedBox(height: 15),
                       const SizedBox(height: 20),
                       // DropdownButton to display route options
-                      DropdownButton<RouteData>(
+                      DropdownButtonFormField<RouteData>(
                         value: selectedRoute,
                         items: routeNames.map((RouteData route) {
                           return DropdownMenuItem<RouteData>(
@@ -193,13 +224,22 @@ class _ShareLocationState extends State<ShareLocation> {
                                 loadBusNames();
                               }
                             : null,
-                        hint: Text('Select Route'),
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          filled: true,
+                          fillColor: Colors.white,
+                          hintText: 'Select Route',
+                          contentPadding:
+                              EdgeInsets.symmetric(horizontal: 10.0),
+                        ),
                         disabledHint: Text('Select Route (Disabled)'),
                       ),
-
+                      const SizedBox(height: 25),
                       //00000000000000000000000000000000000000000000000000000000000
                       // DropdownButton to display bus options
-                      DropdownButton<BusData>(
+                      DropdownButtonFormField<BusData>(
                         value: selectedBus,
                         items: busNames.map((BusData bus) {
                           return DropdownMenuItem<BusData>(
@@ -214,20 +254,53 @@ class _ShareLocationState extends State<ShareLocation> {
                                 });
                               }
                             : null,
-                        hint: Text('Select Bus'),
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          filled: true,
+                          fillColor: Colors.white,
+                          hintText: 'Select Bus',
+                          contentPadding:
+                              EdgeInsets.symmetric(horizontal: 10.0),
+                        ),
                         disabledHint: Text('Select Bus (Disabled)'),
                       ),
 
                       const SizedBox(height: 50),
                       const SizedBox(height: 30),
                       ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: mainBlueColor,
+                          fixedSize:
+                              const Size(300, 50), // Set the width and height
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                                20), // Set the border radius
+                          ),
+                        ),
                         onPressed: startSharingLocation,
-                        child: Text('Start Sharing Location'),
+                        child: const Text(
+                          'Start Sharing Location',
+                          style: TextStyle(color: mainWhiteColor),
+                        ),
                       ),
                       SizedBox(height: 20),
                       ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: mainYellowColor,
+                          fixedSize:
+                              const Size(300, 50), // Set the width and height
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                                20), // Set the border radius
+                          ),
+                        ),
                         onPressed: stopSharingLocation,
-                        child: Text('Stop Sharing Location'),
+                        child: const Text(
+                          'Stop Sharing Location',
+                          style: TextStyle(color: mainBlueColor),
+                        ),
                       ),
                       const SizedBox(height: 5),
                     ],
@@ -239,6 +312,26 @@ class _ShareLocationState extends State<ShareLocation> {
         ),
       ),
     );
+  }
+
+//000000000000000000000000000000000000000000000000000000000000000000
+  Future<void> _incrementLoyaltyCount() async {
+    try {
+      if (currentUser != null) {
+        int currentLoyaltyCount = currentUser!.loyaltycount;
+        int newLoyaltyCount = currentLoyaltyCount + 1;
+
+        // Update the loyaltycount in Firebase
+        await _authMethodes.updateLoyaltyCount(
+            currentUser!.uid, newLoyaltyCount);
+
+        // Update the currentUser locally
+        currentUser!.loyaltycount = newLoyaltyCount;
+        setState(() {}); // Trigger a rebuild
+      }
+    } catch (e) {
+      print('Error incrementing loyaltycount: $e');
+    }
   }
 
 //ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
@@ -272,8 +365,40 @@ class _ShareLocationState extends State<ShareLocation> {
       isBusDropdownEnabled = false;
     });
     shouldUpdateLocation = true;
+    // Show a persistent notification
+    _showPersistentNotification();
     updateLocation();
+    await _incrementLoyaltyCount();
     _showPopup('Sharing location started.');
+  }
+
+//000000000000000000000000000000000
+  void _showPersistentNotification() async {
+    const AndroidNotificationDetails androidPlatformChannelSpecifics =
+        AndroidNotificationDetails(
+      'location_sharing_channel',
+      'Location Sharing',
+      // 'Notification channel for location sharing',
+      importance: Importance.max,
+      priority: Priority.high,
+      ongoing: true,
+      autoCancel: false,
+    );
+
+    const NotificationDetails platformChannelSpecifics =
+        NotificationDetails(android: androidPlatformChannelSpecifics);
+
+    _notificationId = DateTime.now().millisecondsSinceEpoch ~/
+        1000; // Generate a unique notification ID
+
+    await flutterLocalNotificationsPlugin.show(
+      _notificationId!,
+      'Location Sharing',
+      'Sharing your location',
+      platformChannelSpecifics,
+    );
+    // Store the notification ID in SharedPreferences
+    await _preferences.setInt('notification_id', _notificationId!);
   }
 
 //ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
@@ -323,7 +448,15 @@ class _ShareLocationState extends State<ShareLocation> {
       isDropdownEnabled = true;
       isBusDropdownEnabled = true;
     });
+// Cancel the notification when sharing location stops
+    // Retrieve the notification ID from SharedPreferences
+    final storedNotificationId = _preferences.getInt('notification_id');
 
+    if (storedNotificationId != null) {
+      flutterLocalNotificationsPlugin.cancel(storedNotificationId);
+      _preferences.remove('notification_id');
+    }
+// Cancel the notification when sharing location stops
     String uid = currentUser?.uid ?? "";
     if (uid.isNotEmpty) {
       // Iterate over all routes
@@ -403,7 +536,14 @@ class _ShareLocationState extends State<ShareLocation> {
       setState(() {
         currentUser = null;
       });
-      Navigator.pop(context);
+      // ignore: use_build_context_synchronously
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          // builder: (context) => AdminOption(),
+          builder: (context) => const Home(),
+        ),
+      ); // Close the current screen after sign-out
     } catch (err) {
       print(err.toString());
     }

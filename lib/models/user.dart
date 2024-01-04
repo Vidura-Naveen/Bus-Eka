@@ -3,7 +3,7 @@ class User {
   final String email;
   final String userName;
   final String phoneno;
-  final int loyaltycount;
+  late final int loyaltycount;
   final String usercredential;
 
   User({
@@ -14,6 +14,17 @@ class User {
     required this.loyaltycount,
     required this.usercredential,
   });
+
+  // User copyWith({int? loyaltycount}) {
+  //   return User(
+  //     uid: this.uid,
+  //     email: this.email,
+  //     userName: this.userName,
+  //     phoneno: this.phoneno,
+  //     loyaltycount: loyaltycount ?? this.loyaltycount,
+  //     usercredential: this.usercredential,
+  //   );
+  // }
 
   //this methode will convert the user data to json object
   Map<String, dynamic> toJSON() {

@@ -1,6 +1,8 @@
+import 'package:bus_eka_test/screens/menu_item/bus_issues.dart';
+import 'package:bus_eka_test/screens/menu_item/profile.dart';
 import 'package:flutter/material.dart';
-import 'package:bus_eka/screens/admin/admin_login.dart';
-import 'package:bus_eka/utils/colors.dart';
+import 'package:bus_eka_test/screens/admin/admin_login.dart';
+import 'package:bus_eka_test/utils/colors.dart';
 
 class AppDrawer extends StatelessWidget {
   final VoidCallback onSignOut;
@@ -18,12 +20,12 @@ class AppDrawer extends StatelessWidget {
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
-          DrawerHeader(
+          const DrawerHeader(
             decoration: BoxDecoration(
               color: mainBlueColor,
             ),
             child: Text(
-              'BusEka',
+              'Bus Eka LK',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 24,
@@ -31,19 +33,31 @@ class AppDrawer extends StatelessWidget {
             ),
           ),
           ListTile(
-            title: Text('Nothing Do'),
+            title: Text('Profile'),
             onTap: () {
-              // Close the drawer
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  // builder: (context) => AdminOption(),
+                  builder: (context) => Profile(),
+                ),
+              );
             },
           ),
           ListTile(
-            title: Text('Nothing Do'),
+            title: Text('Bus Issues'),
             onTap: () {
-              // Close the drawer
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  // builder: (context) => AdminOption(),
+                  builder: (context) => BusIssue(),
+                ),
+              );
             },
           ),
           ListTile(
-            title: Text('Nothing Do'),
+            title: Text('Settings'),
             onTap: () {
               // Close the drawer
             },

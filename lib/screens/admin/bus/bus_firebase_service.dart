@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:bus_eka/screens/admin/bus/bus_model.dart';
+import 'package:bus_eka_test/screens/admin/bus/bus_model.dart';
 // import 'package:flutter_firebase_crud/models/Bus_model.dart';
 
 class BusFirebaseService {

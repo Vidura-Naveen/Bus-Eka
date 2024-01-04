@@ -1,6 +1,6 @@
 // import 'package:admin_auth/user/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:bus_eka/screens/admin/passenger/passenger_model.dart';
+import 'package:bus_eka_test/screens/admin/passenger/passenger_model.dart';
 // import 'package:flutter_firebase_crud/models/user_model.dart';
 
 class PassengerFirebaseService {

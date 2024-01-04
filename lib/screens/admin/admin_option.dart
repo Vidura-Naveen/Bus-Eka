@@ -1,11 +1,12 @@
+import 'package:bus_eka_test/screens/admin/issue_log.dart';
 import 'package:flutter/material.dart';
-import 'package:bus_eka/screens/admin/bus/bus_home.dart';
-import 'package:bus_eka/screens/admin/passenger/passenger_home.dart';
-import 'package:bus_eka/screens/admin/route/route_home.dart';
-import 'package:bus_eka/utils/colors.dart';
-import 'package:bus_eka/widgets/bluebutton.dart';
-import 'package:bus_eka/widgets/greenbutton.dart';
-import 'package:bus_eka/widgets/yellowbutton.dart';
+import 'package:bus_eka_test/screens/admin/bus/bus_home.dart';
+import 'package:bus_eka_test/screens/admin/passenger/passenger_home.dart';
+import 'package:bus_eka_test/screens/admin/route/route_home.dart';
+import 'package:bus_eka_test/utils/colors.dart';
+import 'package:bus_eka_test/widgets/bluebutton.dart';
+import 'package:bus_eka_test/widgets/greenbutton.dart';
+import 'package:bus_eka_test/widgets/yellowbutton.dart';
 
 class AdminOption extends StatefulWidget {
   const AdminOption({Key? key}) : super(key: key);
@@ -45,8 +46,8 @@ class _AdminOptionState extends State<AdminOption> {
                   'Hay, Admin',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: Colors.yellow,
-                    fontSize: 20, // Set the font size to 20
+                    color: mainWhiteColor,
+                    fontSize: 22, // Set the font size to 20
                     fontFamily:
                         'Montserrat', // Replace 'RobotoMono' with the actual font family name
                   ),
@@ -57,8 +58,8 @@ class _AdminOptionState extends State<AdminOption> {
                   'What You want to DO',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: Colors.yellow,
-                    fontSize: 20,
+                    color: mainYellowColor,
+                    fontSize: 18,
                     fontFamily: 'Montserrat',
                   ),
                 ),
@@ -113,7 +114,29 @@ class _AdminOptionState extends State<AdminOption> {
                           );
                         },
                       ),
-                      const SizedBox(height: 5),
+                      const SizedBox(height: 30),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: mainGreenColor,
+                          fixedSize:
+                              const Size(150, 50), // Set the width and height
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                                20), // Set the border radius
+                          ),
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => BusIssuesList()),
+                          );
+                        },
+                        child: const Text(
+                          'Issue Log',
+                          style: TextStyle(color: mainWhiteColor),
+                        ),
+                      ),
                     ],
                   ),
                 ),

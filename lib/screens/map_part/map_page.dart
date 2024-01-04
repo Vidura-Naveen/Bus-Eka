@@ -38,6 +38,7 @@ class _MapPageState extends State<MapPage> {
   List<LatLng> _driverLocations = [];
   // ignore: unused_field
   List<String> _busName = [];
+  // ignore: unused_field
   List<int> _seatCount = [];
 
   final databaseReference = FirebaseDatabase.instance.ref();
@@ -134,8 +135,7 @@ class _MapPageState extends State<MapPage> {
         position: _driverLocations[i],
         icon: BitmapDescriptor.fromBytes(byteList),
         infoWindow: InfoWindow(
-            title:
-                '${_busName[i]} Bus Have: ${_seatCount[i]} Seat count'), // Use the bus ID here
+            title: '${_busName[i]} Waiting For You'), // Use the bus ID here
       ));
     }
   }
