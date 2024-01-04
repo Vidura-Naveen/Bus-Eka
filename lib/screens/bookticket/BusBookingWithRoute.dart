@@ -1,10 +1,10 @@
-import 'package:bus_eka_test/screens/bookticket/seat/booking_page.dart';
+import 'package:bus_eka/screens/bookticket/seat/booking_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:bus_eka_test/screens/bookticket/book_bus_model.dart';
-import 'package:bus_eka_test/screens/menu_item/drawer.dart';
-import 'package:bus_eka_test/services/auth_logic.dart';
-import 'package:bus_eka_test/utils/colors.dart';
+import 'package:bus_eka/screens/bookticket/book_bus_model.dart';
+import 'package:bus_eka/screens/menu_item/drawer.dart';
+import 'package:bus_eka/services/auth_logic.dart';
+import 'package:bus_eka/utils/colors.dart';
 import '../../models/user.dart' as user_model;
 
 class BusBookingWithRoute extends StatefulWidget {

@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:bus_eka_test/screens/admin/route/route_firebase_service.dart';
-import 'package:bus_eka_test/screens/admin/route/route_model.dart';
+import 'package:bus_eka/screens/admin/route/route_firebase_service.dart';
+import 'package:bus_eka/screens/admin/route/route_model.dart';
 import 'package:uuid/uuid.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 

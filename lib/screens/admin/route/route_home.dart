@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:bus_eka_test/screens/admin/route/route_add_edit.dart';
-import 'package:bus_eka_test/screens/admin/route/route_firebase_service.dart';
-import 'package:bus_eka_test/screens/admin/route/route_model.dart';
+import 'package:bus_eka/screens/admin/route/route_add_edit.dart';
+import 'package:bus_eka/screens/admin/route/route_firebase_service.dart';
+import 'package:bus_eka/screens/admin/route/route_model.dart';
 
 class RouteCrud extends StatefulWidget {
   @override

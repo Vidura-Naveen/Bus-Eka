@@ -1,14 +1,14 @@
-import 'package:bus_eka_test/screens/home.dart';
+import 'package:bus_eka/screens/home.dart';
 import 'package:flutter/material.dart';
-import 'package:bus_eka_test/screens/bookticket/book_ticket.dart';
-import 'package:bus_eka_test/screens/menu_item/drawer.dart';
-import 'package:bus_eka_test/screens/passenger/sharelocation.dart';
-import 'package:bus_eka_test/screens/map_part/map_or_timetable.dart';
-import 'package:bus_eka_test/services/auth_logic.dart';
-import 'package:bus_eka_test/utils/colors.dart';
-import 'package:bus_eka_test/widgets/bluebutton.dart';
-import 'package:bus_eka_test/widgets/greenbutton.dart';
-import 'package:bus_eka_test/widgets/yellowbutton.dart';
+import 'package:bus_eka/screens/bookticket/book_ticket.dart';
+import 'package:bus_eka/screens/menu_item/drawer.dart';
+import 'package:bus_eka/screens/passenger/sharelocation.dart';
+import 'package:bus_eka/screens/map_part/map_or_timetable.dart';
+import 'package:bus_eka/services/auth_logic.dart';
+import 'package:bus_eka/utils/colors.dart';
+import 'package:bus_eka/widgets/bluebutton.dart';
+import 'package:bus_eka/widgets/greenbutton.dart';
+import 'package:bus_eka/widgets/yellowbutton.dart';
 import '../../models/user.dart' as user_model;
 
 class PassengerOption extends StatefulWidget {

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:bus_eka_test/screens/admin/bus/bus_firebase_service.dart';
-import 'package:bus_eka_test/screens/admin/bus/bus_model.dart';
-import 'package:bus_eka_test/screens/admin/route/route_firebase_service.dart';
-import 'package:bus_eka_test/screens/admin/route/route_model.dart';
+import 'package:bus_eka/screens/admin/bus/bus_firebase_service.dart';
+import 'package:bus_eka/screens/admin/bus/bus_model.dart';
+import 'package:bus_eka/screens/admin/route/route_firebase_service.dart';
+import 'package:bus_eka/screens/admin/route/route_model.dart';
 import 'package:uuid/uuid.dart';
 
 class AddEditBusPage extends StatefulWidget {

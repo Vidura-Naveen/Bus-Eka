@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:bus_eka_test/screens/admin/passenger/passenger_firebase_service.dart';
-import 'package:bus_eka_test/screens/admin/passenger/passenger_model.dart';
+import 'package:bus_eka/screens/admin/passenger/passenger_firebase_service.dart';
+import 'package:bus_eka/screens/admin/passenger/passenger_model.dart';
 import 'package:uuid/uuid.dart';
 
 class AddEditPassengerPage extends StatefulWidget {

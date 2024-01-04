@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:bus_eka_test/screens/admin/admin_option.dart';
-import 'package:bus_eka_test/screens/home.dart';
-import 'package:bus_eka_test/utils/colors.dart';
+import 'package:bus_eka/screens/admin/admin_option.dart';
+import 'package:bus_eka/screens/home.dart';
+import 'package:bus_eka/utils/colors.dart';
 
 class AdminLoginPage extends StatefulWidget {
   @override

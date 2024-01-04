@@ -1,12 +1,12 @@
-import 'package:bus_eka_test/screens/admin/issue_log.dart';
+import 'package:bus_eka/screens/admin/issue_log.dart';
 import 'package:flutter/material.dart';
-import 'package:bus_eka_test/screens/admin/bus/bus_home.dart';
-import 'package:bus_eka_test/screens/admin/passenger/passenger_home.dart';
-import 'package:bus_eka_test/screens/admin/route/route_home.dart';
-import 'package:bus_eka_test/utils/colors.dart';
-import 'package:bus_eka_test/widgets/bluebutton.dart';
-import 'package:bus_eka_test/widgets/greenbutton.dart';
-import 'package:bus_eka_test/widgets/yellowbutton.dart';
+import 'package:bus_eka/screens/admin/bus/bus_home.dart';
+import 'package:bus_eka/screens/admin/passenger/passenger_home.dart';
+import 'package:bus_eka/screens/admin/route/route_home.dart';
+import 'package:bus_eka/utils/colors.dart';
+import 'package:bus_eka/widgets/bluebutton.dart';
+import 'package:bus_eka/widgets/greenbutton.dart';
+import 'package:bus_eka/widgets/yellowbutton.dart';
 
 class AdminOption extends StatefulWidget {
   const AdminOption({Key? key}) : super(key: key);

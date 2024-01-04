@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:bus_eka_test/screens/passenger/passenger_options.dart';
-import 'package:bus_eka_test/screens/register_screen.dart';
-// import 'package:bus_eka_test/screens/home.dart';
-import 'package:bus_eka_test/services/auth_logic.dart';
-import 'package:bus_eka_test/utils/colors.dart';
+import 'package:bus_eka/screens/passenger/passenger_options.dart';
+import 'package:bus_eka/screens/register_screen.dart';
+// import 'package:bus_eka/screens/home.dart';
+import 'package:bus_eka/services/auth_logic.dart';
+import 'package:bus_eka/utils/colors.dart';
 
 // ooooooooooooooooooooooo Dont use const ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
 class AuthWrapper extends StatelessWidget {

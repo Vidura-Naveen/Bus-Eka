@@ -1,9 +1,9 @@
-import 'package:bus_eka_test/screens/home.dart';
-import 'package:bus_eka_test/screens/passenger/passenger_options.dart';
+import 'package:bus_eka/screens/home.dart';
+import 'package:bus_eka/screens/passenger/passenger_options.dart';
 import 'package:flutter/material.dart';
-import 'package:bus_eka_test/screens/menu_item/drawer.dart';
-import 'package:bus_eka_test/services/auth_logic.dart';
-import 'package:bus_eka_test/utils/colors.dart';
+import 'package:bus_eka/screens/menu_item/drawer.dart';
+import 'package:bus_eka/services/auth_logic.dart';
+import 'package:bus_eka/utils/colors.dart';
 import '../../models/user.dart' as user_model;
 
 class Profile extends StatefulWidget {

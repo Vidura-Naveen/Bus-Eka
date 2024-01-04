@@ -1,14 +1,14 @@
-import 'package:bus_eka_test/utils/colors.dart';
+import 'package:bus_eka/utils/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:bus_eka_test/screens/home.dart';
-// import 'package:bus_eka_test/screens/home/home.dart';
-import 'package:bus_eka_test/screens/register_screen.dart';
-import 'package:bus_eka_test/screens/passenger/passenger_options.dart';
-// import 'package:bus_eka_test/screens/track_anonymous/map.dart';
-import 'package:bus_eka_test/services/auth_logic.dart';
-import 'package:bus_eka_test/utils/util_functions.dart';
-// import 'package:bus_eka_test/widgets/yellowbutton.dart';
-import 'package:bus_eka_test/widgets/text_feild.dart';
+import 'package:bus_eka/screens/home.dart';
+// import 'package:bus_eka/screens/home/home.dart';
+import 'package:bus_eka/screens/register_screen.dart';
+import 'package:bus_eka/screens/passenger/passenger_options.dart';
+// import 'package:bus_eka/screens/track_anonymous/map.dart';
+import 'package:bus_eka/services/auth_logic.dart';
+import 'package:bus_eka/utils/util_functions.dart';
+// import 'package:bus_eka/widgets/yellowbutton.dart';
+import 'package:bus_eka/widgets/text_feild.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:bus_eka_test/utils/colors.dart';
-// import 'package:bus_eka_test/utils/colors.dart';
+import 'package:bus_eka/utils/colors.dart';
+// import 'package:bus_eka/utils/colors.dart';
 
 class TextFeildInput extends StatelessWidget {
   final TextEditingController controller;

@@ -1,8 +1,8 @@
-import 'package:bus_eka_test/screens/menu_item/bus_issues.dart';
-import 'package:bus_eka_test/screens/menu_item/profile.dart';
+import 'package:bus_eka/screens/menu_item/bus_issues.dart';
+import 'package:bus_eka/screens/menu_item/profile.dart';
 import 'package:flutter/material.dart';
-import 'package:bus_eka_test/screens/admin/admin_login.dart';
-import 'package:bus_eka_test/utils/colors.dart';
+import 'package:bus_eka/screens/admin/admin_login.dart';
+import 'package:bus_eka/utils/colors.dart';
 
 class AppDrawer extends StatelessWidget {
   final VoidCallback onSignOut;

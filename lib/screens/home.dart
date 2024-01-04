@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:bus_eka_test/screens/map_part/map_or_timetable.dart';
-import 'package:bus_eka_test/widgets/bluebutton.dart';
-import 'package:bus_eka_test/services/auth_logic.dart';
-import 'package:bus_eka_test/utils/colors.dart';
-import 'package:bus_eka_test/wrapper.dart';
+import 'package:bus_eka/screens/map_part/map_or_timetable.dart';
+import 'package:bus_eka/widgets/bluebutton.dart';
+import 'package:bus_eka/services/auth_logic.dart';
+import 'package:bus_eka/utils/colors.dart';
+import 'package:bus_eka/wrapper.dart';
 import '../../models/user.dart' as user_model;
 
 class Home extends StatefulWidget {

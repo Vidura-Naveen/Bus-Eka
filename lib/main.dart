@@ -1,8 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:bus_eka_test/firebase_options.dart';
-import 'package:bus_eka_test/screens/home.dart';
-import 'package:bus_eka_test/utils/colors.dart';
+import 'package:bus_eka/firebase_options.dart';
+import 'package:bus_eka/screens/home.dart';
+import 'package:bus_eka/utils/colors.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

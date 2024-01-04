@@ -1,7 +1,7 @@
 // ignore_for_file: unused_local_variable
 
-import 'package:bus_eka_test/screens/bookticket/seat/ticket.dart';
-import 'package:bus_eka_test/utils/colors.dart';
+import 'package:bus_eka/screens/bookticket/seat/ticket.dart';
+import 'package:bus_eka/utils/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 

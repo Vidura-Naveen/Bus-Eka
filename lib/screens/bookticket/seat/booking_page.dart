@@ -1,7 +1,7 @@
 //reset seats
-import 'package:bus_eka_test/screens/bookticket/payment_form.dart';
-import 'package:bus_eka_test/screens/bookticket/seat/reset_seats.dart';
-import 'package:bus_eka_test/utils/colors.dart';
+import 'package:bus_eka/screens/bookticket/payment_form.dart';
+import 'package:bus_eka/screens/bookticket/seat/reset_seats.dart';
+import 'package:bus_eka/utils/colors.dart';
 //reset seats
 
 import 'package:flutter/material.dart';
